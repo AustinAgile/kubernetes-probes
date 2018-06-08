@@ -3,14 +3,15 @@ Library for an express listener on specified port to expose an http probe endpoi
 Both readiness and liveness probes are supported.
 This library supports a model whereby an app could have several asynchronous aspects that define readiness or liveness.
 You define one or more functions for each aspect of readiness or liveness.
-When probed (readiness or liveness), kubernetes-probes calls the appropriate one or more defined functions.
+When probed (readiness or liveness), _kubernetes-probes_ calls the appropriate one or more defined functions.
 
 Use of this library infers your app is implementing both (all) probes.
-If kubernetes-probes gets a probe and there are no functions defined for that type of probe, the response will be negative, i.e., a status code of 200.
+If _kubernetes-probes_ gets a probe and there are no functions defined for that type of probe,
+the response will be negative, i.e., a status code of 400.
 This will indicate to kubernetes that the app is not ready/lively.
 
 ## Usage
-In this examplet here is one liveness function and two readiness functions.
+In this example here is one liveness function and two readiness functions.
 
 ```javascript
 var k8sProbes = require('kubernetes-probes');
@@ -42,10 +43,10 @@ var ready2 = function(cb) {
 ## API
   * `addReadinessFunction(alive, name)`
     * `alive` - [REQUIRED] - function(cb).
-       Called by kubernetes-probes when kubernetes requests a liveness probe.
-       If this function is not defined, kubernetes-probes response will be "liveness function undefined." with status 400.
+       Called by _kubernetes-probes_ when kubernetes requests a liveness probe.
+       If this function is not defined, _kubernetes-probes_ response will be "liveness function undefined." with status 400.
       * `cb` - [REQUIRED] - function(isAlive, message).
-        Called to return liveness state to kubernetes-probes.
+        Called to return liveness state to _kubernetes-probes_.
         * `isAlive` - [REQUIRED] - boolean.
           TRUE indicates alive, response status is 200.
           FALSE indicates not alive, response status is 400.
@@ -57,10 +58,10 @@ var ready2 = function(cb) {
       Name of this particular aspect of being ready. Default is "All".
   * `addLivenessFunction(ready, name)`
     * `ready` - [REQUIRED] - function(cb).
-       Called by kubernetes-probes when kubernetes requests a readiness probe.
-       If this function is not defined, kubernetes-probes response will be "readiness function undefined." with status 400.
+       Called by _kubernetes-probes_ when kubernetes requests a readiness probe.
+       If this function is not defined, _kubernetes-probes_ response will be "readiness function undefined." with status 400.
       * `cb` - [REQUIRED] - function(isReady, message).
-        Called to return liveness state to kubernetes-probes.
+        Called to return liveness state to _kubernetes-probes_.
         * `isReady` - [REQUIRED] - boolean.
           TRUE indicates ready, response status is 200.
           FALSE indicates not ready, response status is 400.
@@ -72,6 +73,6 @@ var ready2 = function(cb) {
       Name of this particular aspect of being lively. Default is "All".
   * `listen(port)`
     * `port` - [REQUIRED] - integer.
-      kubernetes-probes will start listening on this port.
+      _kubernetes-probes_ will start listening on this port.
 
 

@@ -1,0 +1,20 @@
+{
+	"name": "kubernetes-probes",
+	"version": "0.1.2",
+	"description": "Listener for health probes from kubernetes.",
+	"private": false,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AustinAgile/kubernetes-probes"
+	},
+	"main": "app.js",
+	"scripts": {
+	},
+	"author": "AustinAgile",
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"dependencies": {
+		"express": "*"
+	},
+	"devDependencies": {
+	}
+}

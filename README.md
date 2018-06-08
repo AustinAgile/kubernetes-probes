@@ -5,6 +5,9 @@ This library supports a model whereby an app could have several asynchronous asp
 You define one or more functions for each aspect of readiness or liveness.
 When probed (readiness or liveness), kubernetes-probes calls the appropriate one or more defined functions.
 
+Use of this library infers your app is implementing both (all) probes.
+If kubernetes-probes gets a probe and there are no functions defined for that type of probe, the response will be negative, i.e., a status code of 200.
+This will indicate to kubernetes that the app is not ready/lively.
 
 ## Usage
 In this examplet here is one liveness function and two readiness functions.
@@ -34,6 +37,7 @@ var ready2 = function(cb) {
 
 ## Dependencies
 * Express
+* Async
 
 ## API
   * `addReadinessFunction(alive, name)`

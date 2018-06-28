@@ -11,7 +11,16 @@ the response will be negative, i.e., a status code of 400.
 This will indicate to kubernetes that the app is not ready/lively.
 
 ## Usage
-In this example here is one liveness function and two readiness functions.
+In this example readiness and liveness are being set.
+
+```javascript
+var k8sProbes = require('kubernetes-probes');
+k8sProbes.setReadiness(true);
+k8sProbes.setLiveness(true);
+k8sProbes.listen(80);
+```
+
+In this example there is one liveness function and two readiness functions.
 
 ```javascript
 var k8sProbes = require('kubernetes-probes');
@@ -71,6 +80,14 @@ var ready2 = function(cb) {
           * default if `isAlive` FALSE - "not ready".
     * `name` - [OPTIONAL] - string.
       Name of this particular aspect of being lively. Default is "All".
+  * `setReadiness(ready)`
+    * `ready` - [REQUIRED] - boolean.
+       If this function has been called, and `addReadinessFunction()` has not been called,
+       then the most recent value of `ready` will be used to respond to a readiness probe.
+  * `setLiveness(alive)`
+    * `alive` - [REQUIRED] - boolean.
+       If this function has been called, and `addLivenessFunction()` has not been called,
+       then the most recent value of `alive` will be used to respond to a liveness probe.
   * `listen(port)`
     * `port` - [REQUIRED] - integer.
       _kubernetes-probes_ will start listening on this port.

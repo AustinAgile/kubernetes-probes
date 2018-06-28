@@ -5,8 +5,12 @@ var async = require('async');
 
 var readinessFunctions = [];
 var livenessFunctions = [];
+var readinessState = false;
+var livenessState = false;
 
 module.exports = {
+	setReadiness: function(ready) {readinessState = ready;},
+	setLiveness: function(alive) {livenessState = alive;},
 	addReadinessFunction: function(readinessFunction, name) {
 		if (!name) {name = "All";}
 		readinessFunctions.push(function(cb) {
@@ -71,8 +75,15 @@ module.exports = {
 					}
 				});
 			} else {
-				res.status(400);
-				res.send("no readiness functions defined.");
+				if (readinessState == true) {
+					res.header("Content-Type", "text/plain");
+					res.status(200);
+					res.send("ready");
+				}else {
+					res.header("Content-Type", "text/plain");
+					res.status(400);
+					res.send("not ready");
+				}
 			}
 		});
 
@@ -90,8 +101,15 @@ module.exports = {
 					}
 				});
 			} else {
-				res.status(400);
-				res.send("no liveness functions defined.");
+				if (livenessState == true) {
+					res.header("Content-Type", "text/plain");
+					res.status(200);
+					res.send("alive");
+				}else {
+					res.header("Content-Type", "text/plain");
+					res.status(400);
+					res.send("not alive");
+				}
 			}
 		});
 
